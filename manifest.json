@@ -1,0 +1,21 @@
+﻿{
+  "name": "Cashback checker",
+  "version": "0.1",
+  "manifest_version": 2,
+
+  "browser_action": {
+    "default_icon": "crown48.png",
+    "default_popup": "index.html"
+  },
+  
+  "icons": {
+    "16": "crown16.png",
+    "48": "crown48.png",
+    "128": "crown128.png"
+  },
+
+  "permissions": [
+		"tabs"
+  ]
+  
+}
