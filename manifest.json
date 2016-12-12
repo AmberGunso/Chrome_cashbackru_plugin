@@ -8,6 +8,10 @@
     "default_popup": "index.html"
   },
   
+  "background": {
+    "scripts": ["background.js"]
+  },
+  
   "icons": {
     "16": "crown16.png",
     "48": "crown48.png",
@@ -15,7 +19,10 @@
   },
 
   "permissions": [
-		"tabs"
+		"tabs",
+		"activeTab",
+		"http://*/*",
+        "https://*/*"
   ]
   
 }
