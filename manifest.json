@@ -5,7 +5,7 @@
 
   "browser_action": {
     "default_icon": "crown48.png",
-    "default_popup": "index.html"
+    "default_popup": "popup.html"
   },
   
   "background": {

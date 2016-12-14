@@ -4,7 +4,16 @@
 		"dochkisinochki.ru"
 		
 	];
+var all_shops = [];
+all_shops["aliexpress.com"] = {"title":"Aliexpress","max_rate_percent":"8.50","link":"https:\/\/cashback.ru\/Aliexpress"};
+all_shops["gearbest.com"]={"title":"GearBest.com","max_rate_percent":"3.00","link":"https:\/\/cashback.ru\/GearBest.com"};
+all_shops["ozon.ru"]={"title":"Ozon.ru","max_rate_percent":"9.78","link":"https:\/\/cashback.ru\/Ozon.ru"};
+	
+console.log(all_shops);
+console.log(all_shops["aliexpress.com"].link);
+	
 var good_shops_count=0;
+var current_status="";
 console.log('wow');
 
 function check_tab_domain(tab) {
@@ -21,68 +30,58 @@ function check_tab_domain(tab) {
     domain = domain.split(':')[0];
 	domain = domain.match(/(?!=^|[.]|[/]{2})([a-z0-9]+\.[a-z]+)(?=[\/]|$)/i)[0];
 	console.log(domain);
-	if (shop_list.indexOf(domain) > -1) {
+	if (all_shops[domain]!=undefined) {
 		console.log("Нашёл!");
-		//chrome.browserAction.setBadgeBackgroundColor({color:[190, 190, 190, 230]});
-		//good_shops_count++;
-		//chrome.browserAction.setBadgeText({text:"!!!"});
+		current_status='Возможен кэшбэк до ' + all_shops[domain].max_rate_percent + '%<br><a href="'+all_shops[domain].link+'">'+all_shops[domain].title+'</a>';
 		return "Yes";
 	}
 	else{
-		//chrome.browserAction.setBadgeBackgroundColor({color:[100, 100, 100, 230]});
-		//chrome.browserAction.setBadgeText({text:"NOPE"});
+		current_status="На этом сайте нет возможности кэшбэка :(";
 		return "No";
 	}
+	
+	/*if (shop_list.indexOf(domain) > -1) {
+		console.log("Нашёл!");
+		current_status="Возможен кэшбэк до " + ;
+		return "Yes";
+	}
+	else{
+		current_status="На этом сайте нет возможности кэшбэка :(";
+		return "No";
+	}
+	*/
 }
 
-
-function test(arg1)
-{
-	console.log(arg1.tabId);
-	alert('boooo');
-}
-
-	
-//chrome.tabs.onActivated.addListener(function(tabId, changeInfo,tab){
-	
-	//chrome.tabs.onActivated.addListener(test);
-
-	
-//chrome.tabs.onActivated.addListener(function(tabId, changeInfo,tab){
 chrome.tabs.onActivated.addListener(function(activeInfo)
 	{
-		chrome.browserAction.setBadgeBackgroundColor({color:[0, 127, 14, 230]});
-		chrome.browserAction.setBadgeText({text:activeInfo.tabId.toString()}); 
-		
-		/*chrome.tabs.get(activeInfo.tabId, function (tab) {
-							chrome.browserAction.setBadgeText({text:tab.url});
-							}
-				)
-		*/
 		chrome.tabs.get(activeInfo.tabId, function (tab) {
 				if (check_tab_domain(tab)=="Yes")	{
 					chrome.browserAction.setBadgeText({text:"$$$"});
+					//current_status="Возможен кэшбэк до " + ;
 				}
 				else {
 					chrome.browserAction.setBadgeText({text:""});
+					//current_status="-----------";
 				}
 			});
-		
-		//browser.tabs.get(activeInfo.tabId).url
 	});
-
-
 	
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab)
 	{
-		//chrome.browserAction.setBadgeText({text:tabId.toString()});
-		chrome.browserAction.setBadgeBackgroundColor({color:[100, 100, 100, 230]});
+		//Надо проверить, активна ли та вкладка, которая вызвала событие. Если активна, то прогнать тот же код, что сейчас в onActivated
 		chrome.tabs.get(tabId, function (tab) {
 									chrome.browserAction.setBadgeText({text:tab.url});
 									}
 						)
 		
 	});
-	
-console.log('добавил');
 
+ chrome.extension.onConnect.addListener(function(port) {
+      console.log("Connected .....");
+      port.onMessage.addListener(function(msg) {
+           console.log("message recieved" + msg);
+           port.postMessage(current_status);
+      });
+ })
+
+console.log('добавил');
