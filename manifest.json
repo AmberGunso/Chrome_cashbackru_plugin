@@ -23,7 +23,8 @@
 		"activeTab",
 		"http://*/*",
         "https://*/*",
-		"https://cashback.ru/*"
+		"https://cashback.ru/*",
+		"storage" 
   ]
   
 }
