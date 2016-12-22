@@ -4,7 +4,7 @@
   "manifest_version": 2,
 
   "browser_action": {
-    "default_icon": "crown48.png",
+    "default_icon": "coins48.png",
     "default_popup": "popup.html"
   },
   
@@ -13,9 +13,9 @@
   },
   
   "icons": {
-    "16": "crown16.png",
-    "48": "crown48.png",
-    "128": "crown128.png"
+    "16": "coins16.png",
+    "48": "coins48.png",
+    "128": "coins128.png"
   },
 
   "permissions": [
